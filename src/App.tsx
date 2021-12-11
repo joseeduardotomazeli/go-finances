@@ -8,9 +8,8 @@ import {
   Poppins_500Medium,
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
-import { StatusBar } from 'expo-status-bar';
 
-import Welcome from './components/Welcome';
+import Dashboard from './screens/Dashboard';
 
 import theme from './global/styles/theme';
 
@@ -25,10 +24,7 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <View style={styles.container}>
-        <Welcome name="José Eduardo" />
-        <StatusBar style="auto" />
-      </View>
+      <Dashboard />
     </ThemeProvider>
   );
 }
