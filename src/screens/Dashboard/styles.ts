@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import { Feather } from '@expo/vector-icons';
 
 export const Container = styled.View`
   flex: 1;
@@ -18,6 +19,10 @@ export const Header = styled.View`
 `;
 
 export const Wrapper = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
   padding-left: 24px;
   padding-right: 24px;
 
@@ -50,4 +55,9 @@ export const Name = styled.Text`
   color: ${(props) => props.theme.colors.shape};
   font-family: ${(props) => props.theme.fonts.bold};
   font-size: ${RFValue(18)}px;
+`;
+
+export const Icon = styled(Feather)`
+  color: ${(props) => props.theme.colors.secondary};
+  font-size: ${RFValue(24)}px;
 `;
