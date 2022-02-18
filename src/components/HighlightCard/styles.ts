@@ -1,7 +1,6 @@
 import styled, { css } from 'styled-components/native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { Feather } from '@expo/vector-icons';
-import theme from '../../global/styles/theme';
 
 interface TypeProps {
   type: 'up' | 'down' | 'total';
@@ -16,7 +15,9 @@ export const Container = styled.View<TypeProps>`
 
   border-radius: 5px;
   background-color: ${(props) =>
-    props.type === 'total' ? theme.colors.secondary : theme.colors.shape};
+    props.type === 'total'
+      ? props.theme.colors.secondary
+      : props.theme.colors.shape};
 `;
 
 export const Header = styled.View`
@@ -26,7 +27,10 @@ export const Header = styled.View`
 
 export const Title = styled.Text<TypeProps>`
   color: ${(props) =>
-    props.type === 'total' ? theme.colors.shape : theme.colors.text_dark};
+    props.type === 'total'
+      ? props.theme.colors.shape
+      : props.theme.colors.text_dark};
+
   font-family: ${(props) => props.theme.fonts.regular};
   font-size: ${RFValue(14)}px;
 `;
@@ -59,14 +63,20 @@ export const Amount = styled.Text<TypeProps>`
   margin-top: 38px;
 
   color: ${(props) =>
-    props.type === 'total' ? theme.colors.shape : theme.colors.text_dark};
+    props.type === 'total'
+      ? props.theme.colors.shape
+      : props.theme.colors.text_dark};
+
   font-family: ${(props) => props.theme.fonts.medium};
   font-size: ${RFValue(32)}px;
 `;
 
 export const LastTransaction = styled.Text<TypeProps>`
   color: ${(props) =>
-    props.type === 'total' ? theme.colors.shape : theme.colors.text};
+    props.type === 'total'
+      ? props.theme.colors.shape
+      : props.theme.colors.text};
+
   font-family: ${(props) => props.theme.fonts.regular};
   font-size: ${RFValue(12)}px;
 `;
