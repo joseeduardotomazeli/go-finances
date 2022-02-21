@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components/native';
 import AppLoading from 'expo-app-loading';
 import {
@@ -8,7 +9,7 @@ import {
   Poppins_700Bold,
 } from '@expo-google-fonts/poppins';
 
-import Dashboard from './screens/Dashboard';
+import AppRoutes from './routes/app';
 
 import theme from './global/styles/theme';
 
@@ -23,7 +24,9 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Dashboard />
+      <NavigationContainer>
+        <AppRoutes />
+      </NavigationContainer>
     </ThemeProvider>
   );
 }
