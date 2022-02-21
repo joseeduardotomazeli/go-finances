@@ -1,8 +1,11 @@
 import React, { useState } from 'react';
 import { TouchableWithoutFeedback, Keyboard, Modal, Alert } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useNavigation } from '@react-navigation/native';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import uuid from 'react-native-uuid';
 
 import CategorySelect from '../CategorySelect';
 
@@ -24,6 +27,10 @@ interface FormData {
   [name: string]: any;
 }
 
+interface NavigationProps {
+  navigate: (screen: string) => void;
+}
+
 const schema = Yup.object().shape({
   name: Yup.string().required('Campo obrigatório.'),
   amount: Yup.number()
@@ -33,7 +40,9 @@ const schema = Yup.object().shape({
 });
 
 function Register() {
-  const { control, handleSubmit, formState } = useForm({
+  const navigation = useNavigation<NavigationProps>();
+
+  const { control, handleSubmit, formState, reset } = useForm({
     resolver: yupResolver(schema),
   });
 
@@ -61,7 +70,7 @@ function Register() {
     setIsCategoryModalVisible(false);
   }
 
-  function handleRegister(values: FormData) {
+  async function handleRegister(values: FormData) {
     const { name, amount } = values;
 
     if (!transactionType) return Alert.alert('Tipo da transação obrigatório.');
@@ -69,14 +78,36 @@ function Register() {
     if (category.key === 'category')
       return Alert.alert('Categoria obrigatória.');
 
-    const data = {
+    const newTransaction = {
+      id: String(uuid.v4()),
       name,
       amount,
       transactionType,
       category: category.key,
+      date: new Date(),
     };
 
-    console.log(data);
+    try {
+      const key = '@go_finances:transactions';
+
+      const oldTransactions = await AsyncStorage.getItem(key);
+      const oldTransactionsFormatted = oldTransactions
+        ? JSON.parse(oldTransactions)
+        : [];
+
+      const data = [...oldTransactionsFormatted, newTransaction];
+
+      await AsyncStorage.setItem(key, JSON.stringify(data));
+
+      reset();
+
+      setTransactionType('');
+      setCategory({ key: 'category', icon: '', name: 'Categoria' });
+
+      navigation.navigate('Listagem');
+    } catch {
+      Alert.alert('Erro ao salvar.');
+    }
   }
 
   return (
