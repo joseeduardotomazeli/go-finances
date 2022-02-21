@@ -14,6 +14,7 @@ import {
   User,
   Greeting,
   Name,
+  LogOutButton,
   Icon,
   HighlightCards,
   Transactions,
@@ -68,7 +69,9 @@ function Dashboard() {
             </User>
           </Info>
 
-          <Icon name="power" />
+          <LogOutButton onPress={() => {}}>
+            <Icon name="power" />
+          </LogOutButton>
         </Wrapper>
       </Header>
 
