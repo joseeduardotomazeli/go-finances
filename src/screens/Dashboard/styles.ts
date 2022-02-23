@@ -1,5 +1,5 @@
 import styled from 'styled-components/native';
-import { FlatList, FlatListProps } from 'react-native';
+import { ActivityIndicator, FlatList, FlatListProps } from 'react-native';
 import { BorderlessButton } from 'react-native-gesture-handler';
 import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { Feather } from '@expo/vector-icons';
@@ -14,6 +14,17 @@ export const Container = styled.View`
   flex: 1;
   background-color: ${(props) => props.theme.colors.background};
 `;
+
+export const LoadingContainer = styled.View`
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const Loading = styled(ActivityIndicator).attrs((props) => ({
+  color: props.theme.colors.secondary,
+  size: 'large',
+}))``;
 
 export const Header = styled.View`
   flex-direction: row;

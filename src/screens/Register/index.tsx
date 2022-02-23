@@ -58,7 +58,7 @@ function Register() {
 
   const { errors } = formState;
 
-  function handleClickTransactionType(type: 'up' | 'down') {
+  function handleClickTransactionType(type: 'positive' | 'negative') {
     setTransactionType(type);
   }
 
@@ -82,7 +82,7 @@ function Register() {
       id: String(uuid.v4()),
       name,
       amount,
-      transactionType,
+      type: transactionType,
       category: category.key,
       date: new Date(),
     };
@@ -138,17 +138,17 @@ function Register() {
 
             <TransactionTypes>
               <TransactionTypeButton
-                type="up"
+                type="positive"
                 title="Income"
-                isActive={transactionType === 'up'}
-                onPress={() => handleClickTransactionType('up')}
+                isActive={transactionType === 'positive'}
+                onPress={() => handleClickTransactionType('positive')}
               />
 
               <TransactionTypeButton
-                type="down"
+                type="negative"
                 title="Outcome"
-                isActive={transactionType === 'down'}
-                onPress={() => handleClickTransactionType('down')}
+                isActive={transactionType === 'negative'}
+                onPress={() => handleClickTransactionType('negative')}
               />
             </TransactionTypes>
 
