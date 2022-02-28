@@ -1,4 +1,5 @@
 import React from 'react';
+import { StatusBar } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components/native';
 import AppLoading from 'expo-app-loading';
@@ -27,6 +28,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <NavigationContainer>
+        <StatusBar barStyle="light-content" />
         <AppRoutes />
       </NavigationContainer>
     </ThemeProvider>

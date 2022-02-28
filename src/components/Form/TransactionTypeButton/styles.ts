@@ -15,10 +15,10 @@ interface IconProps {
 export const Container = styled.View<ContainerProps>`
   width: 48%;
 
+  border-radius: 5px;
   border-width: ${(props) => (props.isActive ? 0 : 1.5)}px;
   border-style: solid;
   border-color: ${(props) => props.theme.colors.text};
-  border-radius: 5px;
 
   ${(props) =>
     props.type === 'positive' &&
