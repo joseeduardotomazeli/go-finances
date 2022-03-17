@@ -12,6 +12,8 @@ import {
 import 'intl';
 import 'intl/locale-data/jsonp/pt-BR';
 
+import AuthProvider from './contexts/AuthProvider';
+
 import AppRoutes from './routes/app';
 
 import theme from './global/styles/theme';
@@ -29,7 +31,10 @@ function App() {
     <ThemeProvider theme={theme}>
       <NavigationContainer>
         <StatusBar barStyle="light-content" />
-        <AppRoutes />
+
+        <AuthProvider>
+          <AppRoutes />
+        </AuthProvider>
       </NavigationContainer>
     </ThemeProvider>
   );
