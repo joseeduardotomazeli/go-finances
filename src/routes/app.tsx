@@ -3,11 +3,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
 
-const { Navigator, Screen } = createBottomTabNavigator();
-
 import Dashboard from '../screens/Dashboard';
 import Register from '../screens/Register';
 import Resume from '../screens/Resume';
+
+const { Navigator, Screen } = createBottomTabNavigator();
 
 function AppRoutes() {
   const theme = useTheme();

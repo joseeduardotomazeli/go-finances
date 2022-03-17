@@ -1,6 +1,5 @@
 import React from 'react';
 import { StatusBar } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
 import { ThemeProvider } from 'styled-components/native';
 import AppLoading from 'expo-app-loading';
 import {
@@ -14,7 +13,7 @@ import 'intl/locale-data/jsonp/pt-BR';
 
 import AuthProvider from './contexts/AuthProvider';
 
-import AppRoutes from './routes/app';
+import Routes from './routes';
 
 import theme from './global/styles/theme';
 
@@ -29,13 +28,11 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <NavigationContainer>
-        <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="light-content" />
 
-        <AuthProvider>
-          <AppRoutes />
-        </AuthProvider>
-      </NavigationContainer>
+      <AuthProvider>
+        <Routes />
+      </AuthProvider>
     </ThemeProvider>
   );
 }
