@@ -1,5 +1,6 @@
-import React from 'react';
-import { Alert } from 'react-native';
+import React, { useState } from 'react';
+import { ActivityIndicator, Platform, Alert } from 'react-native';
+import { useTheme } from 'styled-components';
 import { RFValue } from 'react-native-responsive-fontsize';
 
 import SocialButton from '../../components/SocialButton';
@@ -22,19 +23,26 @@ import {
 
 function SignIn() {
   const { signInWithGoogle, signInWithApple } = useAuth();
+  const theme = useTheme();
+
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleSignInWithGoogle() {
     try {
-      await signInWithGoogle();
+      setIsLoading(true);
+      return await signInWithGoogle();
     } catch {
+      setIsLoading(false);
       Alert.alert('Não foi possível conectar com a conta Google.');
     }
   }
 
   async function handleSignInWithApple() {
     try {
-      await signInWithApple();
+      setIsLoading(true);
+      return await signInWithApple();
     } catch {
+      setIsLoading(false);
       Alert.alert('Não foi possível conectar com a conta Apple.');
     }
   }
@@ -63,12 +71,21 @@ function SignIn() {
             onPress={handleSignInWithGoogle}
           />
 
-          <SocialButton
-            svg={AppleIcon}
-            title="Entrar com Apple"
-            onPress={handleSignInWithApple}
-          />
+          {Platform.OS === 'ios' && (
+            <SocialButton
+              svg={AppleIcon}
+              title="Entrar com Apple"
+              onPress={handleSignInWithApple}
+            />
+          )}
         </FooterWrapper>
+
+        {isLoading && (
+          <ActivityIndicator
+            color={theme.colors.shape}
+            style={{ marginTop: 18 }}
+          />
+        )}
       </Footer>
     </Container>
   );

@@ -12,19 +12,22 @@ import 'intl';
 import 'intl/locale-data/jsonp/pt-BR';
 
 import AuthProvider from './contexts/AuthProvider';
+import useAuth from './hooks/useAuth';
 
 import Routes from './routes';
 
 import theme from './global/styles/theme';
 
 function App() {
+  const { isLoading } = useAuth();
+
   const [fontsLoaded] = useFonts({
     Poppins_400Regular,
     Poppins_500Medium,
     Poppins_700Bold,
   });
 
-  if (!fontsLoaded) return <AppLoading />;
+  if (!fontsLoaded || isLoading) return <AppLoading />;
 
   return (
     <ThemeProvider theme={theme}>

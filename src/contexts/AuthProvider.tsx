@@ -12,8 +12,10 @@ interface User {
 
 interface AuthContextData {
   user: User;
+  isLoading: boolean;
   signInWithGoogle(): Promise<void>;
   signInWithApple(): Promise<void>;
+  signOut(): Promise<void>;
 }
 
 interface AuthorizationResponse {
@@ -36,6 +38,8 @@ function AuthProvider(props: AuthProviderProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const { children } = props;
+
+  const key = '@go_finances:user';
 
   useEffect(() => {
     async function loadStoragedUser() {
@@ -79,15 +83,11 @@ function AuthProvider(props: AuthProviderProps) {
           id: userInfo.id,
           name: userInfo.given_name,
           email: userInfo.email,
-          photo: userInfo.photo,
+          photo: userInfo.picture,
         };
 
         setUser(userLogged);
-
-        await AsyncStorage.setItem(
-          '@go_finances:user',
-          JSON.stringify(userLogged)
-        );
+        await AsyncStorage.setItem(key, JSON.stringify(userLogged));
       }
     } catch {
       throw new Error();
@@ -112,19 +112,22 @@ function AuthProvider(props: AuthProviderProps) {
         };
 
         setUser(userLogged);
-
-        await AsyncStorage.setItem(
-          '@go_finances:user',
-          JSON.stringify(userLogged)
-        );
+        await AsyncStorage.setItem(key, JSON.stringify(userLogged));
       }
     } catch {
       throw new Error();
     }
   }
 
+  async function signOut() {
+    setUser({} as User);
+    await AsyncStorage.removeItem(key);
+  }
+
   return (
-    <AuthContext.Provider value={{ user, signInWithGoogle, signInWithApple }}>
+    <AuthContext.Provider
+      value={{ user, isLoading, signInWithGoogle, signInWithApple, signOut }}
+    >
       {children}
     </AuthContext.Provider>
   );

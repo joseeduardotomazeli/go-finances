@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -6,6 +6,8 @@ import HighlightCard from '../../components/HighlightCard';
 import TransactionCard, {
   TransactionCardType,
 } from '../../components/TransactionCard';
+
+import useAuth from '../../hooks/useAuth';
 
 import {
   Container,
@@ -42,6 +44,8 @@ export interface TransactionsListProps extends TransactionCardType {
 }
 
 function Dashboard() {
+  const { user, signOut } = useAuth();
+
   const [isLoading, setIsLoading] = useState(true);
 
   const [highlightData, setHighlightData] = useState<HighlightData>(
@@ -164,17 +168,17 @@ function Dashboard() {
               <Info>
                 <Photo
                   source={{
-                    uri: 'https://avatars.githubusercontent.com/u/75822961?v=4.png',
+                    uri: user.photo,
                   }}
                 />
 
                 <User>
                   <Greeting>Olá,</Greeting>
-                  <Name>José Eduardo</Name>
+                  <Name>{user.name}</Name>
                 </User>
               </Info>
 
-              <LogOutButton onPress={() => {}}>
+              <LogOutButton onPress={signOut}>
                 <Icon name="power" />
               </LogOutButton>
             </Wrapper>
