@@ -14,6 +14,8 @@ import SelectButton from '../../components/Form/SelectButton';
 import TransactionTypeButton from '../../components/Form/TransactionTypeButton';
 import Button from '../../components/Form/Button';
 
+import useAuth from '../../hooks/useAuth';
+
 import {
   Container,
   Header,
@@ -40,6 +42,8 @@ const schema = Yup.object().shape({
 });
 
 function Register() {
+  const { user } = useAuth();
+
   const navigation = useNavigation<NavigationProps>();
 
   const { control, handleSubmit, formState, reset } = useForm({
@@ -88,7 +92,7 @@ function Register() {
     };
 
     try {
-      const key = '@go_finances:transactions';
+      const key = `@go_finances-${user.id}:transactions`;
 
       const oldTransactions = await AsyncStorage.getItem(key);
       const oldTransactionsFormatted = oldTransactions

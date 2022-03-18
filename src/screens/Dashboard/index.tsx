@@ -74,7 +74,7 @@ function Dashboard() {
   }
 
   async function loadTransactions() {
-    const key = '@go_finances:transactions';
+    const key = `@go_finances-${user.id}:transactions`;
     const storagedTransactions = await AsyncStorage.getItem(key);
 
     const transactions = storagedTransactions
