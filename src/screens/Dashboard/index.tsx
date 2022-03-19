@@ -58,13 +58,14 @@ function Dashboard() {
     collection: TransactionsListProps[],
     type: 'positive' | 'negative'
   ) {
+    const filteredTrasanctions = collection
+      .filter((transaction) => transaction.type === type)
+      .map((transaction) => new Date(transaction.date).getTime());
+
+    if (!filteredTrasanctions.length) return null;
+
     const lastTransactionDateByType = new Date(
-      Math.max.apply(
-        Math,
-        collection
-          .filter((transaction) => transaction.type === type)
-          .map((transaction) => new Date(transaction.date).getTime())
-      )
+      Math.max.apply(Math, filteredTrasanctions)
     );
 
     return `${lastTransactionDateByType.getDate()} de ${lastTransactionDateByType.toLocaleString(
@@ -127,21 +128,27 @@ function Dashboard() {
           style: 'currency',
           currency: 'BRL',
         }),
-        lastTransaction: `Última entrada dia ${lastPositiveTransactionDate}`,
+        lastTransaction: lastPositiveTransactionDate
+          ? `Última entrada dia ${lastPositiveTransactionDate}`
+          : 'Nào há transações de entrada.',
       },
       negative: {
         amount: negativeAmount.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL',
         }),
-        lastTransaction: `Última saída dia ${lastNegativeTransactionDate}`,
+        lastTransaction: lastNegativeTransactionDate
+          ? `Última saída dia ${lastNegativeTransactionDate}`
+          : 'Nào há transações de saída.',
       },
       total: {
         amount: total.toLocaleString('pt-BR', {
           style: 'currency',
           currency: 'BRL',
         }),
-        lastTransaction: `01 a ${lastNegativeTransactionDate}`,
+        lastTransaction: lastNegativeTransactionDate
+          ? `01 a ${lastNegativeTransactionDate}`
+          : '',
       },
     });
 
